@@ -16,11 +16,8 @@ router.get('/', async (req: Request, res: Response) => {
     res.send(items);
 });
 
-//@TODO
 //Add an endpoint to GET a specific resource by Primary Key
-
-// update a specific resource
-router.patch('/:id',
+router.get('/:id',
     requireAuth,
     async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -32,6 +29,35 @@ router.patch('/:id',
             item.url = AWS.getGetSignedUrl(item.url);
         }
         res.send(item);
+    });
+
+// update a specific resource
+router.patch('/:id',
+    requireAuth,
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const { caption } = req.body;
+        const { url } = req.body;
+
+        const item = await FeedItem.findByPk(id);
+        if (!item) {
+            res.status(404).send('item not found');
+        }
+
+        // check Caption is valid
+        if (caption) {
+            item.caption = caption;
+        }
+
+        // check Filename is valid
+        if (url) {
+            item.url = url;
+        }
+
+        const updated_item = await item.save();
+        updated_item.url = AWS.getGetSignedUrl(updated_item.url);
+
+        res.status(204).send(updated_item);
     });
 
 

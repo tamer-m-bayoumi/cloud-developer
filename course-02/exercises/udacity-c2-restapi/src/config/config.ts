@@ -1,6 +1,4 @@
 
-console.log(process.env.POSTGRES_USERNAME_DEV)
-console.log(process.env.POSTGRES_PASSWORD_DEV)
 export const config = {
   "dev": {
     "username": process.env.POSTGRES_USERNAME_DEV,
