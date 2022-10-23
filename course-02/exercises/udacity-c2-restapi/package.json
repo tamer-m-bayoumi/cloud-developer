@@ -9,7 +9,7 @@
     "dev": "ts-node-dev ./src/server.ts",
     "prod": "tsc && node ./www/server.js",
     "clean": "rimraf www/ || true",
-    "build": "npm run clean && tsc && cp -rf src/config www/config && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
+    "build": "npm run clean && npm run tsc && copy -rf src/config www/config && copy .npmrc www/.npmrc && copy package.json www/package.json && cd www && Compress-Archive -Path * -DestinationPath Archive.zip && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "aws-sdk": "^2.1238.0",
     "bcrypt": "^5.1.0",
     "connect": "^3.7.0",
+    "copy": "^0.2.0",
     "dotenv": "^16.0.3",
     "email-validator": "^2.0.4",
     "express": "^4.18.2",
